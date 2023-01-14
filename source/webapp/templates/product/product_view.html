@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="card">
+        <h5 class="card-header">{{ product.title }}</h5>
+        <div class="card-body">
+            <p class="card-text">Категория: {{ product.category }}</p>
+            <p class="card-text">Описание товара: {{ product.description }}</p>
+            {% if product.picture == True %}
+
+            <a href="{% url 'product_update' product.pk %}" class="btn btn-primary">Редактировать</a>
+            <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger">Удалить</a>
+        </div>
+    </div>
+{% endblock %}
