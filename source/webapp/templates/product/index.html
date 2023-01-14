@@ -3,7 +3,7 @@
 {% block nav %}
     {% if request.user.is_authenticated %}
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'product_add' %}">Add product</a>
+            <a class="nav-link" href="{% url 'webapp:product_add' %}">Add product</a>
         </li>
     {% endif %}
 {% endblock %}

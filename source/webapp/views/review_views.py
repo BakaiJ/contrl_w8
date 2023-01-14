@@ -13,7 +13,7 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
     form_class = ReviewForm
 
     def get_success_url(self):
-        return reverse('product_view', kwargs={'pk': self.object.product.pk})
+        return reverse('webapp:product_view', kwargs={'pk': self.object.product.pk})
 
     def form_valid(self, form):
         product = get_object_or_404(Product, pk=self.kwargs.get('pk'))
@@ -29,21 +29,21 @@ class ReviewUpdateView(PermissionRequiredMixin, UpdateView):
     context_object_name = 'review'
 
     def has_permission(self):
-        return self.request.user.has_perm('change_review') or self.get_object().user == self.request.user
+        return self.request.user.has_perm('webapp.change_review') or self.get_object().user == self.request.user
 
     def get_success_url(self):
-        return reverse('product_view', kwargs={'pk': self.object.product.pk})
+        return reverse('webapp:product_view', kwargs={'pk': self.object.product.pk})
 
 
 class ReviewDeleteView(UserPassesTestMixin, DeleteView):
     model = Review
 
     def test_func(self):
-        return self.request.user.has_perm('delete_comment') or self.get_object().user == self.request.user
+        return self.request.user.has_perm('webapp.delete_review') or self.get_object().user == self.request.user
 
     def get(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('product_view', kwargs={'pk': self.object.product.pk })
+        return reverse('webapp:product_view', kwargs={'pk': self.object.product.pk })
 
