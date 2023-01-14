@@ -1,11 +1,13 @@
 from django import forms
 from django.forms import widgets
-from webapp.models import CATEGORY_CHOICES, Product
+from webapp.models import CATEGORY_CHOICES, Product, Review
 
-#
-# class SearchForm(forms.Form):
-#     search = forms.CharField(max_length=50, required=False, label="Найти")
-#
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['review_text', 'user', 'rating', 'moderated']
+
 
 class ProductForm(forms.ModelForm):
     class Meta:

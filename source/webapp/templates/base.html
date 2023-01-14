@@ -19,13 +19,16 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-{#            <div class="navbar-nav">#}
-{#                {% block nav %}{% endblock %}#}
-{#                {% if request.user.is_authenticated %}#}
-{#                    <li class="nav-item">#}
-{#                    </li>#}
-{#                {% endif %}#}
-{#            </div>#}
+            <div class="navbar-nav">
+                {% block nav %}{% endblock %}
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                    <ul>
+
+                    </ul>
+                    </li>
+                {% endif %}
+            </div>
             {% if request.user.is_authenticated %}
                 <p class="ms-auto text-secondary d-inline-block my-0 py-auto">Привет, {{ request.user.username }}</p>
 {#                <a class="btn btn-dark ms-2"#}

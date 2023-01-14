@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block nav %}
 
+    {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'product_add' %}">Add product</a>
+        </li>
+
+        {% if perms.webapp.change_product or article.user == request.user %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'product_update' product.pk %}">Update</a>
+            </li>
+        {% endif %}
+        {% if perms.webapp.delete_product  or product.user == request.user %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'product_delete' product.pk %}">Delete</a>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'product_review_add' product.pk %}">Add review</a>
+        </li>
+    {% endif %}
+{% endblock %}
 {% block content %}
     <div class="card">
         <h5 class="card-header">{{ product.title }}</h5>
@@ -18,5 +39,33 @@
             <a href="{% url 'product_update' product.pk %}" class="btn btn-primary">Редактировать</a>
             <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger">Удалить</a>
         </div>
+    </div>
+{#    <p><b>Средняя оценка: {{ product.get_average }}</b></p>#}
+            <h3 class="ms-3">Reviews:</h3>
+    <div class="row">
+        {% for review in reviews %}
+            <div class="col-sm-4">
+                <div class="card text-bg-light mb-3">
+                    <div class="card-body">
+                        <p class="card-text">Review: {{ review.review_text }}</p>
+                        <p class="card-text">Rating: {{ review.rating }}</p>
+                        <p class="card-text">User name: {{ review.user }}</p>
+                        <p class="card-text">Mail: {{ review.get.user.email }}</p>
+                        <div class="d-flex justify-content-around">
+                            {% if perms.webapp.change_review or review.user == request.user %}
+                                <a href="{% url 'review_update' review.pk %}"
+                                   class="btn btn-success px-5">Update</a>
+                            {% endif %}
+                            {% if perms.webapp.delete_review or review.user == request.user %}
+                                <a href="{% url 'review_delete' review.pk %}"
+                                   class="btn btn-danger px-5">Delete</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>Отзывов нет</p>
+        {% endfor %}
     </div>
 {% endblock %}

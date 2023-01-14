@@ -16,6 +16,13 @@ class ProductDetail(DetailView):
     model = Product
     template_name = 'product/product_view.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.object
+        reviews = product.reviews.order_by('-created_at')
+        context['reviews'] = reviews
+        return context
+
 
 class ProductCreate(CreateView):
     model = Product
